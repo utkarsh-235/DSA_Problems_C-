@@ -1,0 +1,28 @@
+class Solution {
+public:
+    string reorganizeString(string s) {
+        vector<int>fq(26,0);
+        for(char c:s) fq[c-'a']++;
+        int letter=0,max=0;
+        for(int i=0;i<fq.size();i++){
+            if(fq[i]>max) max=fq[i], letter=i;
+        }
+        if(max>(s.length()+1)/2) return "";
+        string res(s.length(), ' ');
+
+        int idx=0;
+        while(fq[letter]-->0){
+           res[idx] = static_cast<char>(letter + 'a');
+
+           idx+=2;
+        }
+     
+        for(int i=0;i<fq.size();i++){
+            while(fq[i]-->0){
+                if(idx>=s.length()) idx=1;
+                res[idx] = static_cast<char>(i + 'a');
+                idx+=2;
+            }
+        }
+    return res;}
+};
